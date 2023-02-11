@@ -63,9 +63,11 @@ public class BoidManager : MonoBehaviour {
             var cohesionVector = boid.Cohesion(CohesionStep, CohesionWeight);
             var separationVector = boid.Separation(SeparationWeight);
             var alignmentVector = boid.Alignment(AlignmentWeight);
-            var seekVector = boid.Seek(Target, SeekWeight);
+            // var seekVector = boid.Seek(Target, SeekWeight);
+            var seekVector = Vector3.zero;
             var socializeVector = boid.Socialize(_boids, SocializeWeight);
-            var arrivalVector = boid.Arrival(Target, ArrivalSlowingDistance, ArrivalMaxSpeed);
+            // var arrivalVector = boid.Arrival(Target, ArrivalSlowingDistance, ArrivalMaxSpeed);
+            var arrivalVector = Vector3.zero;
             // Update Boid's Position and Velocity
             var velocity = boid.Velocity + cohesionVector + separationVector + alignmentVector + seekVector + socializeVector + arrivalVector;
             velocity = boid.LimitVelocity(velocity, MaxVelocty);

@@ -47,3 +47,5 @@ test/
 # screenshot images
 screenshots/
 
+# recordings folder
+Recordings/

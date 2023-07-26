@@ -1,12 +1,14 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Boid : MonoBehaviour
 {
     public Vector3 Position;
     public Vector3 Velocity;
     public List<Transform> Neighbors;
+    public float averageSpeed = 1;
 
     // Constructor with args
     public Boid(Vector3 position, Vector3 velocity)
@@ -15,6 +17,15 @@ public class Boid : MonoBehaviour
         Velocity = velocity;
         gameObject.transform.position = position;
         gameObject.transform.rotation = Quaternion.LookRotation(Vector3.Normalize(velocity));
+    }
+
+    // Constructor with args
+    public Boid(Vector3 position, Vector3 velocity, float averageSpeed) {
+        Position = position;
+        Velocity = velocity;
+        gameObject.transform.position = position;
+        gameObject.transform.rotation = Quaternion.LookRotation(Vector3.Normalize(velocity));
+        this.averageSpeed = averageSpeed;
     }
 
     //-------------
@@ -28,6 +39,14 @@ public class Boid : MonoBehaviour
         Velocity = velocity;
         gameObject.transform.position = position;
         gameObject.transform.rotation = Quaternion.LookRotation(Vector3.Normalize(velocity));
+    }
+
+    public void UpdateBoid(Vector3 position, Vector3 velocity, float averageSpeed) {
+        Position = position;
+        Velocity = velocity;
+        gameObject.transform.position = position;
+        gameObject.transform.rotation = Quaternion.LookRotation(Vector3.Normalize(velocity));
+        this.averageSpeed = averageSpeed;
     }
 
     //------------------
@@ -99,6 +118,37 @@ public class Boid : MonoBehaviour
             c = c + Vector3.Normalize(Position - neighbor.Position) / Mathf.Pow(distance, 2);
         }
         return c * weight;
+    }
+
+    //-------------
+    // Edge Avoidance
+    //-------------
+    public Vector3 EdgeAvoidance(float[,] bounds, float weight) {
+        // Averages
+        float[] averages = new float[3];
+        for (int i = 0; i < averages.Length; i++)
+            averages[i] = (bounds[i, 0] + bounds[i, 1]) / 2;
+
+        // Aquarium size scale
+        float[] sizeScale = new float[3];
+        for (int i = 0; i < sizeScale.Length; i++)
+            sizeScale[i] = Mathf.Abs(bounds[i, 0] - bounds[i, 1]);
+
+        // Directions
+        var x_dir = Mathf.Sign(averages[0] - transform.position.x);
+        // var y_dir = 0;
+        //var z_dir = 0;
+        var y_dir = Mathf.Sign(averages[1] - transform.position.y);
+        var z_dir = Mathf.Sign(averages[2] - transform.position.z);
+
+        // Avoidance Scale
+        Vector3 eav = new Vector3(
+            x_dir * Mathf.Pow(weight / ((transform.position.x + bounds[0, 0] - averages[0]) * (transform.position.x + bounds[0, 1] - averages[0])), 2f),
+            y_dir * Mathf.Pow(weight / ((transform.position.y + bounds[1, 0] - averages[1]) * (transform.position.y + bounds[1, 1] - averages[1])), 2f),
+            z_dir * Mathf.Pow(weight / ((transform.position.z + bounds[2, 0] - averages[2]) * (transform.position.z + bounds[2, 1] - averages[2])), 2f)
+            );
+
+        return eav;
     }
 
     //------------
@@ -188,6 +238,20 @@ public class Boid : MonoBehaviour
         return desiredVelocity - Velocity;
     }
 
+    // ------------------
+    // Speed Management
+    // ------------------
+    public Vector3 ManageSpeed(float weight) {
+        return weight * (averageSpeed - Velocity.magnitude) * Velocity.normalized;
+    }
+
+    // --------
+    // Random
+    // --------
+    public Vector3 Noise(float weight) {
+        // return weight * new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
+        return weight * Random.onUnitSphere;
+    }
 
     //===========
     // Utilities

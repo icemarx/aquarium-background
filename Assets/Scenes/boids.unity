@@ -454,7 +454,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 536507233}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15.62, y: 7.92, z: 2.36}
+  m_LocalPosition: {x: 15.62, y: 7.92, z: 9.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -878,7 +878,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 951825329}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.62, y: -5.74, z: 2.36}
+  m_LocalPosition: {x: -15.62, y: -5.74, z: 9.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1356,7 +1356,7 @@ MonoBehaviour:
   MaxRotationAngle: 1
   InitialVelocity: {x: 1, y: 0, z: 0}
   CohesionStep: 100
-  CohesionWeight: 0.8
+  CohesionWeight: 0.75
   SeparationWeight: 0.001
   AlignmentWeight: 0.01
   SeekWeight: 0
@@ -1364,7 +1364,7 @@ MonoBehaviour:
   ArrivalSlowingDistance: 0.5
   ArrivalMaxSpeed: 0.13
   cornersParent: {fileID: 718959264}
-  EdgeAvoidanceWeight: 0.3
+  EdgeAvoidanceWeight: 0.5
   averageSpeed: 1.25
   speedDeviation: 0.25
   SpeedManagementWeight: 0.001
@@ -1408,7 +1408,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1895116686}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.62, y: 7.92, z: 2.36}
+  m_LocalPosition: {x: -15.62, y: 7.92, z: 9.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1634,7 +1634,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2137129952}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15.62, y: -5.74, z: 2.36}
+  m_LocalPosition: {x: 15.62, y: -5.74, z: 9.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

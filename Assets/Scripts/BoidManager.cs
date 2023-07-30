@@ -81,12 +81,14 @@ public class BoidManager : MonoBehaviour {
     {
         for (var i = 0; i < _boids.Count; ++i)
         {
+            /*
             // Check if position is out of bounds
             if(!WithinBounds(_boids[i].position)) {
                 Debug.Log("Destroyed boid");
                 Destroy(_boids[i].gameObject);
                 _boids[i] = GenerateBoid();
             }
+            */
 
 
             var boid = _boids[i].GetComponent<Boid>();

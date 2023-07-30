@@ -13,7 +13,7 @@ public class BoidManager : MonoBehaviour {
     public float NeighborDistance;          // 0.8
     public float MaxVelocty;
     public float MaxRotationAngle;
-    public Vector3 InitialVelocity;
+    // public Vector3 InitialVelocity;
     [Header("Cohesion")]
     [Tooltip("Arbitary text message")]
     public float CohesionStep;              // 100
@@ -31,6 +31,7 @@ public class BoidManager : MonoBehaviour {
     public float ArrivalMaxSpeed;           // 0.2
     [Header("Edge Avoidance")]
     public Transform cornersParent;         // Parent of the corners of the world
+    private Vector3 center = Vector3.zero;
     public float EdgeAvoidanceWeight;       // 1
     private float[,] bounds;
     [Header("Boid Speed Management")]
@@ -69,11 +70,16 @@ public class BoidManager : MonoBehaviour {
 	}
 
     private Transform GenerateBoid() {
-        var pos = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(0f, 2.0f), Random.Range(-1.0f, 1.0f));
+        // Chose random corner
+        var randCorner = cornersParent.GetChild(Random.Range(0, cornersParent.childCount));
+        var dir2center = (center - randCorner.position).normalized;
+        var pos = randCorner.position + 3 * dir2center + Random.insideUnitSphere * .5f;
+
+        // var pos = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(0f, 2.0f), Random.Range(-1.0f, 1.0f));
         var tra = Instantiate(Prefab, pos, Quaternion.identity);
         var spe = averageSpeed + speedDeviation * Random.Range(-1.0f, 1.0f);
 
-        tra.GetComponent<Boid>().UpdateBoid(pos, InitialVelocity, spe);
+        tra.GetComponent<Boid>().UpdateBoid(pos, dir2center, spe);
         return tra;
     }
 
@@ -168,7 +174,10 @@ public class BoidManager : MonoBehaviour {
             bounds[1, 1] = Mathf.Max(bounds[1, 1], c.position.y);
             bounds[2, 0] = Mathf.Min(bounds[2, 0], c.position.z);
             bounds[2, 1] = Mathf.Max(bounds[2, 1], c.position.z);
+
+            center += c.position;
         }
+        center /= corners.Length;
 
         /*
         Debug.Log(bounds[0, 0]);

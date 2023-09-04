@@ -391,7 +391,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 282840810}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalPosition: {x: 0, y: 1, z: -11.44}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1354,10 +1354,10 @@ MonoBehaviour:
   NeighborDistance: 1
   MaxVelocty: 2
   MaxRotationAngle: 1
-  CohesionStep: 100
-  CohesionWeight: 0.75
-  SeparationWeight: 0.001
-  AlignmentWeight: 0.01
+  CohesionStep: 50
+  CohesionWeight: 0.1
+  SeparationWeight: 0.005
+  AlignmentWeight: 0.02
   SeekWeight: 0
   SocializeWeight: 0
   ArrivalSlowingDistance: 0.5

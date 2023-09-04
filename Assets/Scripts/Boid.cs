@@ -137,7 +137,7 @@ public class Boid : MonoBehaviour
         
 
         // Directions
-        var x_dir = Mathf.Sign(averages[0] - transform.position.x); // check if it should be reversed
+        var x_dir = Mathf.Sign(averages[0] - transform.position.x);
         var y_dir = Mathf.Sign(averages[1] - transform.position.y);
         var z_dir = Mathf.Sign(averages[2] - transform.position.z);
 

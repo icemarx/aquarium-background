@@ -137,12 +137,13 @@ public class BoidManager : MonoBehaviour {
                 cohesionVector +
                 separationVector +
                 alignmentVector +
-                seekVector +
-                socializeVector +
-                arrivalVector +
+                // seekVector +
+                // socializeVector +
+                // arrivalVector +
                 edgeAvoidanceVector +
                 speedManagementVector +
-                noiseVector;
+                noiseVector +
+                Vector3.zero;
             velocity = boid.LimitVelocity(velocity, MaxVelocty);
             // velocity = boid.LimitRotation(velocity, MaxRotationAngle, MaxVelocty);
             var prev = boid.Position;

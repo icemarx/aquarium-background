@@ -129,23 +129,23 @@ public class Boid : MonoBehaviour
         for (int i = 0; i < averages.Length; i++)
             averages[i] = (bounds[i, 0] + bounds[i, 1]) / 2;
 
-        /*
+        
         // Aquarium size scale
         float[] sizeScale = new float[3];
         for (int i = 0; i < sizeScale.Length; i++)
             sizeScale[i] = Mathf.Abs(bounds[i, 0] - bounds[i, 1]);
-        */
+        
 
         // Directions
-        var x_dir = Mathf.Sign(averages[0] - transform.position.x);
+        var x_dir = Mathf.Sign(averages[0] - transform.position.x); // check if it should be reversed
         var y_dir = Mathf.Sign(averages[1] - transform.position.y);
         var z_dir = Mathf.Sign(averages[2] - transform.position.z);
 
         // Avoidance Scale
-        Vector3 eav = new Vector3(
-            x_dir * Mathf.Pow(weight / ((transform.position.x + bounds[0, 0] - averages[0]) * (transform.position.x + bounds[0, 1] - averages[0])), 2f),
-            y_dir * Mathf.Pow(weight / ((transform.position.y + bounds[1, 0] - averages[1]) * (transform.position.y + bounds[1, 1] - averages[1])), 2f),
-            z_dir * Mathf.Pow(weight / ((transform.position.z + bounds[2, 0] - averages[2]) * (transform.position.z + bounds[2, 1] - averages[2])), 2f));
+        Vector3 eav = weight * new Vector3(
+            x_dir * Mathf.Pow(sizeScale[0] / ((transform.position.x + bounds[0, 0] - averages[0]) * (transform.position.x + bounds[0, 1] - averages[0])), 2f),
+            y_dir * Mathf.Pow(sizeScale[1] / ((transform.position.y + bounds[1, 0] - averages[1]) * (transform.position.y + bounds[1, 1] - averages[1])), 2f),
+            z_dir * Mathf.Pow(sizeScale[2] / ((transform.position.z + bounds[2, 0] - averages[2]) * (transform.position.z + bounds[2, 1] - averages[2])), 2f));
 
         return eav;
     }

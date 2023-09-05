@@ -1368,6 +1368,7 @@ MonoBehaviour:
   averageSpeed: 1.75
   speedDeviation: 0.5
   SpeedManagementWeight: 0.01
+  OrientationAdjustmentWeight: 0.001
   NoiseWeight: 0.01
 --- !u!4 &1724447495
 Transform:

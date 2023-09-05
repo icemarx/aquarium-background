@@ -252,6 +252,20 @@ public class Boid : MonoBehaviour
         return weight * Random.onUnitSphere;
     }
 
+    // --------------------
+    // Adjust Orientation
+    // --------------------
+    public Vector3 AdjustOrientation(float weight)
+    {
+        // find projection of orientation
+        var projection = new Vector3(Velocity.x, 0, Velocity.z);
+
+        // scale projection based on y magnitude
+        var aov = Velocity.y * projection.normalized;
+
+        return weight * aov;
+    }
+
     //===========
     // Utilities
     //===========

@@ -38,6 +38,8 @@ public class BoidManager : MonoBehaviour {
     public float averageSpeed;
     public float speedDeviation;
     public float SpeedManagementWeight;
+    [Header("Orientation Adjustment")]
+    public float OrientationAdjustmentWeight;
     [Header("Noise")]
     public float NoiseWeight;
 
@@ -121,6 +123,8 @@ public class BoidManager : MonoBehaviour {
             var edgeAvoidanceVector = boid.EdgeAvoidance(bounds, EdgeAvoidanceWeight);
             // Debug.Log("Edge avoidance:" + edgeAvoidanceVector.magnitude);
 
+            var orientationAdjustmentVector = boid.AdjustOrientation(OrientationAdjustmentWeight);
+
             /*
             if(i == 0) {
                 // Debug.Log("CV: " + cohesionVector.magnitude);
@@ -138,10 +142,11 @@ public class BoidManager : MonoBehaviour {
                 separationVector +
                 alignmentVector +
                 // seekVector +
-                socializeVector +
                 // arrivalVector +
+                socializeVector +
                 edgeAvoidanceVector +
                 speedManagementVector +
+                orientationAdjustmentVector +
                 noiseVector +
                 Vector3.zero;
             velocity = boid.LimitVelocity(velocity, MaxVelocty);

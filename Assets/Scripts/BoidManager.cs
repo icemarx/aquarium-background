@@ -110,8 +110,8 @@ public class BoidManager : MonoBehaviour {
 
             // var seekVector = boid.Seek(Target, SeekWeight);
             var seekVector = Vector3.zero;
-            // var socializeVector = boid.Socialize(_boids, SocializeWeight);
-            var socializeVector = Vector3.zero;
+            var socializeVector = boid.Socialize(_boids, SocializeWeight);
+            // var socializeVector = Vector3.zero;
 
             // var arrivalVector = boid.Arrival(Target, ArrivalSlowingDistance, ArrivalMaxSpeed);
             var arrivalVector = Vector3.zero;
@@ -138,7 +138,7 @@ public class BoidManager : MonoBehaviour {
                 separationVector +
                 alignmentVector +
                 // seekVector +
-                // socializeVector +
+                socializeVector +
                 // arrivalVector +
                 edgeAvoidanceVector +
                 speedManagementVector +

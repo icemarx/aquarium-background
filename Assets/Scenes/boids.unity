@@ -1360,7 +1360,7 @@ MonoBehaviour:
   SeparationWeight: 0.02
   AlignmentWeight: 0.05
   SeekWeight: 0
-  SocializeWeight: 0
+  SocializeWeight: 0.002
   ArrivalSlowingDistance: 0.5
   ArrivalMaxSpeed: 0.13
   cornersParent: {fileID: 718959264}

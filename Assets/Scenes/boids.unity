@@ -1353,7 +1353,7 @@ MonoBehaviour:
   Target: {fileID: 1049826992}
   NumberOfBoids: 100
   NeighborDistance: 1
-  MaxVelocty: 3
+  MaxVelocty: 4
   MaxRotationAngle: 1
   CohesionStep: 100
   CohesionWeight: 0.7

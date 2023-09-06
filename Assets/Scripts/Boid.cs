@@ -8,25 +8,47 @@ public class Boid : MonoBehaviour
     public Vector3 Position;
     public Vector3 Velocity;
     public List<Transform> Neighbors;
-    public float averageSpeed = 1;
 
-    // Constructor with args
-    public Boid(Vector3 position, Vector3 velocity)
+    public readonly static float s_MaxSpeed = 4;
+    public readonly static float s_MinSpeed = 0.005f;
+    public readonly static float s_MaxSize = 1.25f;
+    public readonly static float s_MinSize = 0.75f;
+    public readonly static float s_Deviation = 1f;
+
+    // Personality
+    private string _personality;
+    private float _averageSpeed;
+    private float _maxSpeed;
+    private float _minSpeed;
+    private float _bodySizeScale;
+
+    public void InitBoid(Vector3 position, Vector3 velocity)
     {
         Position = position;
         Velocity = velocity;
         gameObject.transform.position = position;
         gameObject.transform.rotation = Quaternion.LookRotation(Vector3.Normalize(velocity));
+
+        _averageSpeed = Random.Range(s_MinSpeed + s_Deviation, s_MaxSpeed - s_Deviation);
+        _maxSpeed = Mathf.Min(_averageSpeed + Random.Range(0, s_Deviation), s_MaxSpeed);
+        _minSpeed = Mathf.Max(_averageSpeed - Random.Range(0, s_Deviation), s_MinSpeed);
+        _bodySizeScale = Random.Range(s_MinSize, s_MaxSize);
+
+        transform.localScale *= _bodySizeScale;
+
+        _personality = GeneratePersonality(_averageSpeed, _maxSpeed, _minSpeed, _bodySizeScale);
     }
 
-    // Constructor with args
-    public Boid(Vector3 position, Vector3 velocity, float averageSpeed) {
+    /*
+     * DEPRICATED
+    public void InitBoid(Vector3 position, Vector3 velocity, float averageSpeed) {
         Position = position;
         Velocity = velocity;
         gameObject.transform.position = position;
         gameObject.transform.rotation = Quaternion.LookRotation(Vector3.Normalize(velocity));
-        this.averageSpeed = averageSpeed;
-    }
+        this._averageSpeed = averageSpeed;
+    }*/
+
 
     //-------------
     // UpdateBoid
@@ -46,7 +68,7 @@ public class Boid : MonoBehaviour
         Velocity = velocity;
         gameObject.transform.position = position;
         gameObject.transform.rotation = Quaternion.LookRotation(Vector3.Normalize(velocity));
-        this.averageSpeed = averageSpeed;
+        this._averageSpeed = averageSpeed;
     }
 
     //------------------
@@ -241,7 +263,7 @@ public class Boid : MonoBehaviour
     // Speed Management
     // ------------------
     public Vector3 ManageSpeed(float weight) {
-        return weight * (averageSpeed - Velocity.magnitude) * Velocity.normalized;
+        return weight * (_averageSpeed - Velocity.magnitude) * Velocity.normalized;
     }
 
     // --------
@@ -291,6 +313,7 @@ public class Boid : MonoBehaviour
         }
     }
 
+    // DEPRICATED
     public Vector3 LimitVelocity(Vector3 v, float limit)
     {
         if (v.magnitude > limit)
@@ -300,8 +323,54 @@ public class Boid : MonoBehaviour
         return v;
     }
 
+    public Vector3 LimitVelocity(Vector3 v)
+    {
+        return v.normalized * Mathf.Clamp(v.magnitude, _minSpeed, _maxSpeed);
+    }
+
     public Vector3 LimitRotation(Vector3 v, float maxAngle, float maxSpeed)
     {
         return Vector3.RotateTowards(Velocity, v, maxAngle * Mathf.Deg2Rad, maxSpeed);
+    }
+
+    private string GeneratePersonality(params float[] numbers)
+    {
+        var personality = "";
+        foreach(var n in numbers)
+        {
+            int rawBits = BitConverter.SingleToInt32Bits(n);
+            // divide into 8 chunks of 4 bits
+            var word = "";
+            for(int i = 0; i < 8; i++)
+            {
+                char c = (char) (1 + 64 + rawBits % 16);
+                rawBits /= 16;
+                word = c + word;
+            }
+            personality += "-" + word;
+        }
+        personality = personality.Remove(0, 1);   // removes the first "-"
+
+        return personality;
+    }
+
+    private float[] DecodePersonality(string s)
+    {
+        var ss = s.Split("-");
+
+        float[] nums = new float[ss.Length];
+        for(int i = 0; i < ss.Length; i++)
+        {
+            int rawBits = 0;
+            for(int j = 0; j < ss[i].Length; j++)
+            {
+                int c = ((int) ss[i][j]) - 64 - 1;
+                rawBits *= 16;
+                rawBits += c;
+            }
+            nums[i] = BitConverter.Int32BitsToSingle(rawBits);
+        }
+
+        return nums;
     }
 }

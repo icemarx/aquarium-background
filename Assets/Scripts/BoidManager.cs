@@ -11,7 +11,6 @@ public class BoidManager : MonoBehaviour {
     [Header("Boids")]
     public int NumberOfBoids;
     public float NeighborDistance;          // 0.8
-    public float MaxVelocty;
     public float MaxRotationAngle;
     // public Vector3 InitialVelocity;
     [Header("Cohesion")]
@@ -79,9 +78,9 @@ public class BoidManager : MonoBehaviour {
 
         // var pos = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(0f, 2.0f), Random.Range(-1.0f, 1.0f));
         var tra = Instantiate(Prefab, pos, Quaternion.identity);
-        var spe = averageSpeed + speedDeviation * Random.Range(-1.0f, 1.0f);
+        // var spe = averageSpeed + speedDeviation * Random.Range(-1.0f, 1.0f);
 
-        tra.GetComponent<Boid>().UpdateBoid(pos, dir2center, spe);
+        tra.GetComponent<Boid>().InitBoid(pos, dir2center);
         return tra;
     }
 
@@ -149,7 +148,8 @@ public class BoidManager : MonoBehaviour {
                 orientationAdjustmentVector +
                 noiseVector +
                 Vector3.zero;
-            velocity = boid.LimitVelocity(velocity, MaxVelocty);
+            // velocity = boid.LimitVelocity(velocity, MaxVelocty);
+            velocity = boid.LimitVelocity(velocity);
             // velocity = boid.LimitRotation(velocity, MaxRotationAngle, MaxVelocty);
             var prev = boid.Position;
             var position = boid.Position + velocity * Time.deltaTime;

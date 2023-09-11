@@ -1352,13 +1352,12 @@ MonoBehaviour:
   Prefab: {fileID: 2243721513251459610, guid: 8b3d51177620e7a47bb425ebafea9974, type: 3}
   Target: {fileID: 1049826992}
   NumberOfBoids: 100
-  NeighborDistance: 1
-  MaxVelocty: 4
-  MaxRotationAngle: 1
+  NeighborDistance: 1.5
+  MaxRotationAngle: 0.5
   CohesionStep: 100
-  CohesionWeight: 0.7
-  SeparationWeight: 0.02
-  AlignmentWeight: 0.05
+  CohesionWeight: 0.85
+  SeparationWeight: 0.03
+  AlignmentWeight: 0.03
   SeekWeight: 0
   SocializeWeight: 0.002
   ArrivalSlowingDistance: 0.5

@@ -9,6 +9,7 @@ public class BoidManager : MonoBehaviour {
     public Transform Prefab;
     public Transform Target;
     [Header("Boids")]
+    [Min(0)]
     public int NumberOfBoids;
     public float NeighborDistance;          // 0.8
     public float MaxRotationAngle;
@@ -69,6 +70,26 @@ public class BoidManager : MonoBehaviour {
 //	        boid.PrintNeighbors();
 	    }
 	}
+    
+    private void Update()
+    {
+        if(_boids.Count > NumberOfBoids)
+        {
+            Debug.Log("Decreasing number of boids");
+            while (_boids.Count > NumberOfBoids && _boids.Count > 0)
+            {
+                DestroyFirstBoid();
+            }
+        }
+        else if(_boids.Count < NumberOfBoids)
+        {
+            Debug.Log("Increasing number of boids");
+            while (_boids.Count < NumberOfBoids)
+            {
+                _boids.Add(GenerateBoid());
+            }
+        }
+    }
 
     private Transform GenerateBoid() {
         // Chose random corner
@@ -82,6 +103,16 @@ public class BoidManager : MonoBehaviour {
 
         tra.GetComponent<Boid>().InitBoid(pos, dir2center);
         return tra;
+    }
+
+    private void DestroyFirstBoid()
+    {
+        if(_boids.Count > 0)
+        {
+            Destroy(_boids[0].gameObject);
+            _boids.RemoveAt(0);
+        }
+        Debug.Log("Remaining boids: " + _boids.Count);
     }
 
     private void UpdateBoids()

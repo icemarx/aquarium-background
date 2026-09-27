@@ -1,3 +1,22 @@
+### Developer note
+
+**Aquarium wallpaper.** Fork of [Zack Klinger's Boids](https://github.com/zklinger2000/unity-boids) (2018), which I extended in 2023 into a Wallpaper Engine aquarium.
+
+![Image](docs/images/AquariumDemo.gif)
+
+**My changes:**
+- Smooth edge avoidance
+- Per-fish personalities (speed and size)
+- Orientation levelling
+- Socialize and noise rules
+- Corner spawning
+- Runtime-adjustable fish count
+- Fish model
+- Windows build
+
+[Demo video](https://drive.google.com/file/d/1eNCTirIT5mShpT8uD0QHWfj10xmP0vy2/view)
+
+
 # Boids
 
 **Platform:** Unity3D  
